@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "School Equipment Lending - Monorepo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Student One\", \"email\": \"student@school.com\", \"password\": \"studentpass\", \"role\": \"student\"}"
+        },
+        "url": {
+          "raw": "{{proxy}}/auth/register",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"student@school.com\", \"password\": \"studentpass\"}"
+        },
+        "url": {
+          "raw": "{{proxy}}/auth/login",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Equipment",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{proxy}}/api/equipment",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "equipment"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Request Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"equipment\": \"{{equipmentId}}\", \"quantity\": 1, \"from\": \"2025-11-02T10:00:00.000Z\", \"to\": \"2025-11-03T10:00:00.000Z\"}"
+        },
+        "url": {
+          "raw": "{{proxy}}/api/booking",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "booking"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Approve Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{staffToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"action\": \"approve\"}"
+        },
+        "url": {
+          "raw": "{{proxy}}/api/booking/{{bookingId}}/approve",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "booking",
+            "{{bookingId}}",
+            "approve"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Issue Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{staffToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{proxy}}/api/booking/{{bookingId}}/issue",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "booking",
+            "{{bookingId}}",
+            "issue"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Return Booking",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{staffToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{proxy}}/api/booking/{{bookingId}}/return",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "booking",
+            "{{bookingId}}",
+            "return"
+          ]
+        }
+      }
+    },
+    {
+      "name": "List Notifications",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{proxy}}/api/notifications",
+          "host": [
+            "{{proxy}}"
+          ],
+          "path": [
+            "api",
+            "notifications"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "proxy",
+      "value": "http://localhost:5001"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "staffToken",
+      "value": ""
+    },
+    {
+      "key": "equipmentId",
+      "value": ""
+    },
+    {
+      "key": "bookingId",
+      "value": ""
+    }
+  ]
+}
