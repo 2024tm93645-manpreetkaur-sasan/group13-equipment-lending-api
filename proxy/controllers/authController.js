@@ -27,15 +27,7 @@ export const registerUser = async (req, res) => {
     //  No token generated or returned
     res.status(StatusCodes.CREATED).json({
       success: true,
-      message: 'Registration successful',
-      data: {
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
-      },
+      message: 'Registration successful'
     });
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -67,9 +59,7 @@ export const loginUser = async (req, res) => {
     res.status(StatusCodes.OK).json({
       success: true,
       message: 'Login successful',
-      data: {
-        token
-      },
+      token
     });
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
