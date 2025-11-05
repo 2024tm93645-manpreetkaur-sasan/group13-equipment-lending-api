@@ -19,7 +19,9 @@ exports.list = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
+  console.log('Attempting to create equipment...'); // Add this
     const it = await Equipment.create(req.body);
+    console.log('Equipment created successfully!'); // Add this
     return res
       .status(StatusCodes.CREATED)
       .json({ success: true, message: 'equipment created', data: it });
