@@ -24,7 +24,7 @@ export const registerUser = async (req, res) => {
       role: role || process.env.DEFAULT_USER_ROLE,
     });
 
-    // ✅ No token generated or returned
+    //  No token generated or returned
     res.status(StatusCodes.CREATED).json({
       success: true,
       message: 'Registration successful',
@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
         .status(StatusCodes.UNAUTHORIZED)
         .json({ success: false, message: 'Invalid credentials' });
 
-    const token = generateToken({ id: user._id, role: user.role });
+    const token = generateToken({ id: user._id, role: user.role , name: user.name , email : user.email});
 
     res.status(StatusCodes.OK).json({
       success: true,
