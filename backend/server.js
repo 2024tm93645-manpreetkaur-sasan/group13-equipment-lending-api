@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
 const connectDB = require('./config/database');
 const config = require('./config/config');
 const routes = require('./routes');
@@ -8,7 +7,6 @@ const routes = require('./routes');
 const { StatusCodes } = require('http-status-codes');
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 

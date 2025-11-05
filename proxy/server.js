@@ -10,20 +10,31 @@ dotenv.config();
 const app = express();
 
 const PORT = process.env.PORT || 5001;
+const FRONTEND = process.env.FRONTEND_URL || 'http://localhost:3000'; // React app
 const BACKEND = process.env.BACKEND_URL || 'http://localhost:4000';
 
-// DB connection
-connectDB();
+//  CORS only on Proxy (frontend → proxy)
+app.use(
+  cors({
+    origin: FRONTEND,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id', 'x-user-role'],
+  })
+);
 
-// Core middlewares
-app.use(cors());
+// Middlewares
 app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
 app.use('/auth', authRoutes);
 
-// Proxy middleware
+// Proxy middleware (proxy → backend)
 app.use('/api', apiProxy);
 
-app.listen(PORT, () => console.log(`✅ Proxy running on port ${PORT} → ${BACKEND}`));
+connectDB();
+
+app.listen(PORT, () =>
+  console.log(` Proxy running on port ${PORT} → Backend: ${BACKEND}`)
+);
