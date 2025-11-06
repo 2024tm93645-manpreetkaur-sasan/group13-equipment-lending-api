@@ -4,7 +4,7 @@ module.exports = function (req, res, next) {
 
   if (id && role) {
     req.user = { id, role };
-    console.log("User Injected into backend:", req.user);
+    console.debug("User Injected into backend:", req.user);
   } else {
     console.log("No user info found in request headers");
   }

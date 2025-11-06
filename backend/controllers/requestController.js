@@ -41,7 +41,7 @@ exports.request = async (req, res) => {
       return res.status(StatusCodes.CONFLICT).json({ success: false, message: 'booking conflict' });
 
     const r = await Request.create({
-      user: uid, // Just storing the ID from proxy
+      user: uid, // storing the ID from proxy
       equipment,
       quantity,
       issueDate: new Date(from),

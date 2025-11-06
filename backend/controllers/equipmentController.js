@@ -9,7 +9,7 @@ exports.list = async (req, res) => {
     const items = await Equipment.find(f).lean();
     return res
       .status(StatusCodes.OK)
-      .json({ success: true, message: 'equipment list', data: items });
+      .json({ success: true, message: 'Equipment List', data: items });
   } catch (e) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -19,9 +19,9 @@ exports.list = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-  console.log('Attempting to create equipment...'); // Add this
+  console.debug('Attempting to create equipment...');
     const it = await Equipment.create(req.body);
-    console.log('Equipment created successfully!'); // Add this
+    console.debug('Equipment created successfully!');
     return res
       .status(StatusCodes.CREATED)
       .json({ success: true, message: 'equipment created', data: it });

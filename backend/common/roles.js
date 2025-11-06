@@ -1,9 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 
 module.exports = function (roles) {
-  // Ensure roles is always an array
   const allowedRoles = Array.isArray(roles) ? roles : [roles];
-  console.log("Roles required:", allowedRoles);
+  console.debug("Roles required:", allowedRoles);
 
   return function (req, res, next) {
     const u = req.user;
@@ -15,7 +14,7 @@ module.exports = function (roles) {
         .json({ success: false, message: 'unauthorized' });
     }
 
-    console.log("User role found:", u.role);
+    console.debug("User role found:", u.role);
 
     if (!allowedRoles.includes(u.role)) {
       return res
