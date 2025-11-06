@@ -4,9 +4,10 @@ const connectDB = require('./config/database');
 const config = require('./config/config');
 const routes = require('./routes');
 const injectUser = require('./common/injectUser');
+const startOverdueScheduler = require('./scripts/overDueScheduler');
 
-console.log("➡️ Starting backend...");
-console.log("🔧 Loaded config:", config);
+console.log("Starting backend...");
+console.log("Loaded config:", config);
 
 const app = express();
 
@@ -21,13 +22,12 @@ app.use(morgan('dev'));
 app.use(injectUser);
 
 app.use((req, res, next) => {
-  console.log('🔥 Backend received request:');
+  console.log('Backend received request:');
   console.log('Method:', req.method);
   console.log('URL:', req.originalUrl);
   console.log('Headers:', req.headers);
   next();
 });
-
 
 // API routes
 app.use('/api', routes);
@@ -41,7 +41,11 @@ app.use((err, req, res, next) => {
 // Connect to DB and start server
 connectDB()
   .then(() => {
-    app.listen(config.PORT, () => console.log('Backend listening at PORT', config.PORT));
+    app.listen(config.PORT, () => {
+      console.log(`Backend listening at PORT: ${config.PORT}`);
+      startOverdueScheduler();
+      console.log("Overdue Scheduler STARTED (CRON running)");
+    });
   })
   .catch((e) => {
     console.error('DB connect error', e.message);

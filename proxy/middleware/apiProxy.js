@@ -7,11 +7,23 @@ const BACKEND = process.env.BACKEND_URL || 'http://localhost:4000';
 // Middleware to decode JWT
 const injectUserMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (authHeader?.startsWith('Bearer ')) {
-    const token = authHeader.split(' ')[1];
-    const payload = verifyToken(token);
-    if (payload) req.user = { id: payload.id, role: payload.role };
+
+  if (authHeader?.startsWith('Bearer')) {
+    // Removes "Bearer", trims extra spaces, gets token
+    const token = authHeader.replace("Bearer", "").trim();
+
+    try {
+      const payload = verifyToken(token);
+      if (payload) {
+        req.user = { id: payload.id, role: payload.role };
+      }
+    } catch (err) {
+      console.error("Proxy JWT failed:", err.message);
+    }
+  } else {
+    console.log(" No valid Bearer token found in header");
   }
+
   next();
 };
 
@@ -35,6 +47,10 @@ const apiProxy = createProxyMiddleware({
   changeOrigin: true,
   logLevel: 'debug',
   onProxyReq: (proxyReq, req) => {
+  if (req.headers.authorization) {
+      proxyReq.setHeader("Authorization", req.headers.authorization);
+    }
+
     // Forward JWT user headers
     if (req.user) {
       proxyReq.setHeader('x-user-id', req.user.id);

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const s = new mongoose.Schema(
   {
+  user: {
+      type: String,
+      required: true,
+    },
     request: { type: mongoose.Schema.Types.ObjectId, ref: 'Request' },
     type: String,
     message: String,
