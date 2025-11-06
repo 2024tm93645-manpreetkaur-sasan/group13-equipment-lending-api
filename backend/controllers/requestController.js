@@ -14,9 +14,12 @@ async function hasOverlap(equip, from, to, exclude) {
       { issueDate: { $lte: from }, dueDate: { $gte: to } },
     ],
   };
-  if (exclude) q._id = { $ne: mongoose.Types.ObjectId(exclude) };
+
+  if (exclude) q._id = { $ne: new mongoose.Types.ObjectId(exclude) };
+
   return (await Request.countDocuments(q)) > 0;
 }
+
 
 exports.request = async (req, res) => {
   try {
