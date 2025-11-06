@@ -2,6 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js';
+import connectDB from './config/db.js';
 import { apiProxy, injectUserMiddleware, rawBodyMiddleware } from './middleware/apiProxy.js';
 
 dotenv.config();
@@ -17,6 +19,8 @@ app.use(cors({
 
 app.use(morgan('dev'));
 
+app.use('/auth', express.json(), authRoutes);
+
 // Use rawBody middleware BEFORE json middleware
 app.use(rawBodyMiddleware);
 
@@ -25,5 +29,7 @@ app.use(injectUserMiddleware);
 
 // Mount proxy
 app.use('/api', apiProxy);
+
+connectDB();
 
 app.listen(PORT, () => console.log(`Proxy running on port ${PORT} → Backend: ${process.env.BACKEND_URL}`));
