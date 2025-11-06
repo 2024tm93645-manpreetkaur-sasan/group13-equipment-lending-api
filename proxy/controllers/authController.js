@@ -24,6 +24,7 @@ export const registerUser = async (req, res) => {
       role: role || process.env.DEFAULT_USER_ROLE,
     });
 
+    //  No token generated or returned
     res.status(StatusCodes.CREATED).json({
       success: true,
       message: 'Registration successful'
