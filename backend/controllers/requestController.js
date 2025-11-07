@@ -33,7 +33,7 @@ exports.request = async (req, res) => {
     if (!eq)
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ success: false, message: 'equipment not found' });
+        .json({ success: false, message: 'Equipment not found' });
 
     if (quantity > eq.available)
       return res
