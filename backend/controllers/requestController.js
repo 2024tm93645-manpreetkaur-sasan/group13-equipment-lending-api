@@ -64,33 +64,34 @@ exports.request = async (req, res) => {
 };
 
 exports.approve = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const act = req.body.action;
-    const r = await Request.findById(id);
-    if (!r) return res.status(StatusCodes.NOT_FOUND).json({ success: false, message: 'not found' });
+  const id = req.params.id;
+  const r = await Request.findById(id);
 
-    if (act === 'approve') {
-      if (await hasOverlap(r.equipment, r.issueDate, r.dueDate, id))
-        return res.status(StatusCodes.CONFLICT).json({ success: false, message: 'conflict' });
+  if (!r) return res.status(StatusCodes.NOT_FOUND).json({ success: false, message: 'not found' });
 
-      r.status = 'approved';
-      r.approvedBy = req.user && req.user.id;
-      await r.save();
-      return res.status(StatusCodes.OK).json({ success: true, message: 'approved', data: r });
-    }
+  if (await hasOverlap(r.equipment, r.issueDate, r.dueDate, id))
+    return res.status(StatusCodes.CONFLICT).json({ success: false, message: 'conflict' });
 
-    r.status = 'rejected';
-    r.approvedBy = req.user && req.user.id;
-    await r.save();
-    return res.status(StatusCodes.OK).json({ success: true, message: 'rejected', data: r });
+  r.status = 'approved';
+  r.approvedBy = req.user.id;
+  await r.save();
 
-  } catch (e) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ success: false, message: e.message });
-  }
+  return res.status(StatusCodes.OK).json({ success: true, message: 'approved', data: r });
 };
+
+exports.reject = async (req, res) => {
+  const id = req.params.id;
+  const r = await Request.findById(id);
+
+  if (!r) return res.status(StatusCodes.NOT_FOUND).json({ success: false, message: 'not found' });
+
+  r.status = 'rejected';
+  r.approvedBy = req.user.id;
+  await r.save();
+
+  return res.status(StatusCodes.OK).json({ success: true, message: 'rejected', data: r });
+};
+
 
 exports.issue = async (req, res) => {
   try {
@@ -155,7 +156,9 @@ exports.return = async (req, res) => {
 exports.list = async (req, res) => {
   try {
     const q = {};
-    if (!(req.user && req.user.role === 'admin')) q.user = req.user && req.user.id;
+    if (!['admin', 'staff'].includes(req.user.role)) {
+            q.user = req.user.id;
+    }
 
     const items = await Request.find(q)
       .populate('equipment') // only populate equipment
