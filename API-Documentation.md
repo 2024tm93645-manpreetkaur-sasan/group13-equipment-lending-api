@@ -18,21 +18,14 @@ Register a new user account.
 
 **Request Body:**
 ```json
-{
-  "email": "user@school.com",
-  "password": "password123",
-  "name": "John Doe",
-  "role": "student"
-}
+{"name": "Admin-Manpreet", "email": "admin-backend@school.com", "password": "adminpass", "role": "admin"}
 ```
 
 **Response:** `201 Created`
 ```json
 {
-  "id": "user_123",
-  "email": "user@school.com",
-  "name": "John Doe",
-  "role": "student"
+  "success": true,
+  "message": "Registration successful"
 }
 ```
 
@@ -43,22 +36,15 @@ Authenticate user and receive JWT token.
 
 **Request Body:**
 ```json
-{
-  "email": "student@school.com",
-  "password": "student123"
-}
+{"email": "admin-backend@school.com", "password": "adminpass"}
 ```
 
 **Response:** `200 OK`
 ```json
 {
-  "token": "jwt_token_here",
-  "user": {
-    "id": "user_123",
-    "email": "student@school.com",
-    "name": "Student User",
-    "role": "student"
-  }
+  "success": true,
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGY4NjZkMzNhYzAzOTA3YTU4Y2NhNSIsInJvbGUiOiJhZG1pbiIsIm5hbWUiOiJBZG1pbi1NYW5wcmVldCIsImVtYWlsIjoiYWRtaW4tYmFja2VuZEBzY2hvb2wuY29tIiwiaWF0IjoxNzYyNjI1MTQ0LCJleHAiOjE3NjI3MTE1NDR9.Z10t19QXsxhj1YJqirEX2RnpCiYA5ZilGXwyRtrG2bU"
 }
 ```
 
@@ -77,24 +63,48 @@ Retrieve list of school equipments.
 **Headers:** `Authorization: Bearer <jwt_token>`
 
 **Query Parameters:**
-- `page` (optional): Page number (default: 1)
-- `limit` (optional): Items per page (default: 10)
 - `status` (optional): Filter by status (available, borrowed)
 
 **Response:** `200 OK`
 ```json
 {
-  "equipments": [
+  "success": true,
+  "message": "equipment list",
+  "data": [
     {
-      "id": "equip_001",
-      "name": "MacBook Pro",
-      "category": "Laptop",
-      "status": "available",
-      "serialNumber": "SN123456"
+      "_id": "690f82760a2f2f4aaf022216",
+      "name": "Soccer Ball",
+      "category": "sports",
+      "condition": "good",
+      "quantity": 10,
+      "available": 10,
+      "createdAt": "2025-11-08T17:48:38.397Z",
+      "updatedAt": "2025-11-08T17:48:38.397Z",
+      "__v": 0
+    },
+    {
+      "_id": "690f82760a2f2f4aaf022218",
+      "name": "DSLR Camera",
+      "category": "camera",
+      "condition": "good",
+      "quantity": 2,
+      "available": 2,
+      "createdAt": "2025-11-08T17:48:38.406Z",
+      "updatedAt": "2025-11-08T18:00:01.551Z",
+      "__v": 0
+    },
+    {
+      "_id": "690f86c89e828282bb683197",
+      "name": "Educational Recorded Sessions",
+      "category": "sessions",
+      "condition": "good",
+      "quantity": 6,
+      "available": 6,
+      "createdAt": "2025-11-08T18:07:04.022Z",
+      "updatedAt": "2025-11-08T18:07:04.022Z",
+      "__v": 0
     }
-  ],
-  "total": 25,
-  "page": 1
+  ]
 }
 ```
 
@@ -112,15 +122,104 @@ Retrieve equipment lending requests.
 **Response:** `200 OK`
 ```json
 {
-  "requests": [
+  "success": true,
+  "message": "requests list",
+  "data": [
     {
-      "id": "req_001",
-      "equipmentId": "equip_001",
-      "userId": "user_123",
+      "_id": "690f82760a2f2f4aaf02221d",
+      "user": "690f803e50c423fb2f943107",
+      "equipment": {
+        "_id": "690f82760a2f2f4aaf022218",
+        "name": "DSLR Camera",
+        "category": "camera",
+        "condition": "good",
+        "quantity": 2,
+        "available": 2,
+        "createdAt": "2025-11-08T17:48:38.406Z",
+        "updatedAt": "2025-11-08T18:00:01.551Z",
+        "__v": 0
+      },
+      "quantity": 1,
+      "issueDate": "2025-11-05T17:48:38.411Z",
+      "dueDate": "2025-11-07T17:48:38.411Z",
       "status": "overdue",
-      "requestDate": "2025-10-01T10:00:00Z",
-      "dueDate": "2025-11-01T10:00:00Z",
-      "returnDate": null
+      "overdueNotified": true,
+      "approvedBy": "690f803e50c423fb2f943105",
+      "createdAt": "2025-11-08T17:48:38.412Z",
+      "updatedAt": "2025-11-08T17:50:00.142Z",
+      "__v": 0
+    },
+    {
+      "_id": "690f82760a2f2f4aaf02221f",
+      "user": "690f803e50c423fb2f943107",
+      "equipment": {
+        "_id": "690f82760a2f2f4aaf022216",
+        "name": "Soccer Ball",
+        "category": "sports",
+        "condition": "good",
+        "quantity": 10,
+        "available": 10,
+        "createdAt": "2025-11-08T17:48:38.397Z",
+        "updatedAt": "2025-11-08T17:48:38.397Z",
+        "__v": 0
+      },
+      "quantity": 1,
+      "issueDate": "2025-11-08T18:48:38.411Z",
+      "dueDate": "2025-11-11T17:48:38.411Z",
+      "status": "approved",
+      "overdueNotified": false,
+      "approvedBy": "690f803e50c423fb2f943105",
+      "createdAt": "2025-11-08T17:48:38.413Z",
+      "updatedAt": "2025-11-08T17:48:38.413Z",
+      "__v": 0
+    },
+    {
+      "_id": "690f84ca9e828282bb683180",
+      "user": "690f83de33ac03907a58cc9f",
+      "equipment": {
+        "_id": "690f82760a2f2f4aaf022218",
+        "name": "DSLR Camera",
+        "category": "camera",
+        "condition": "good",
+        "quantity": 2,
+        "available": 2,
+        "createdAt": "2025-11-08T17:48:38.406Z",
+        "updatedAt": "2025-11-08T18:00:01.551Z",
+        "__v": 0
+      },
+      "quantity": 1,
+      "issueDate": "2025-11-08T17:59:57.877Z",
+      "dueDate": "2025-11-10T17:59:57.877Z",
+      "status": "returned",
+      "overdueNotified": false,
+      "createdAt": "2025-11-08T17:58:34.533Z",
+      "updatedAt": "2025-11-08T18:00:01.557Z",
+      "__v": 0,
+      "approvedBy": "690f83de33ac03907a58cc9f",
+      "returnDate": "2025-11-08T18:00:01.557Z"
+    },
+    {
+      "_id": "690f87199e828282bb6831a1",
+      "user": "690f83de33ac03907a58cc9f",
+      "equipment": {
+        "_id": "690f82760a2f2f4aaf022218",
+        "name": "DSLR Camera",
+        "category": "camera",
+        "condition": "good",
+        "quantity": 2,
+        "available": 2,
+        "createdAt": "2025-11-08T17:48:38.406Z",
+        "updatedAt": "2025-11-08T18:00:01.551Z",
+        "__v": 0
+      },
+      "quantity": 1,
+      "issueDate": "2025-02-05T09:00:00.000Z",
+      "dueDate": "2025-02-07T18:00:00.000Z",
+      "status": "pending",
+      "overdueNotified": false,
+      "createdAt": "2025-11-08T18:08:25.792Z",
+      "updatedAt": "2025-11-08T18:08:25.792Z",
+      "__v": 0
     }
   ]
 }
@@ -136,20 +235,31 @@ Create a new equipment lending request.
 **Request Body:**
 ```json
 {
-  "equipmentId": "equip_001",
-  "dueDate": "2025-12-01T10:00:00Z",
-  "purpose": "Class project work"
+  "equipment": "690f82760a2f2f4aaf022218",
+  "quantity": 1,
+  "from": "2025-02-05T09:00:00.000Z",
+  "to": "2025-02-07T18:00:00.000Z"
 }
 ```
 
 **Response:** `201 Created`
 ```json
 {
-  "id": "req_002",
-  "equipmentId": "equip_001",
-  "userId": "user_123",
-  "status": "pending",
-  "dueDate": "2025-12-01T10:00:00Z"
+  "success": true,
+  "message": "request created",
+  "data": {
+    "user": "690f83de33ac03907a58cc9f",
+    "equipment": "690f82760a2f2f4aaf022218",
+    "quantity": 1,
+    "issueDate": "2025-02-05T09:00:00.000Z",
+    "dueDate": "2025-02-07T18:00:00.000Z",
+    "status": "pending",
+    "overdueNotified": false,
+    "_id": "690f87199e828282bb6831a1",
+    "createdAt": "2025-11-08T18:08:25.792Z",
+    "updatedAt": "2025-11-08T18:08:25.792Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -182,23 +292,6 @@ Retrieve notifications for logged-in user (polled by frontend).
 }
 ```
 
----
-
-### PATCH /api/notifications/:id/read
-Mark notification as read.
-
-**Headers:** `Authorization: Bearer <jwt_token>`
-
-**Response:** `200 OK`
-```json
-{
-  "id": "notif_001",
-  "read": true,
-  "updatedAt": "2025-11-08T12:00:00Z"
-}
-```
-
----
 
 ## Cron Scheduler (Backend Internal)
 
