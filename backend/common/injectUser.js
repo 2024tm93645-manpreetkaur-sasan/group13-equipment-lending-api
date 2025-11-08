@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
     req.user = { id, role };
     console.log("User Injected into backend:", req.user);
   } else {
-    console.log("No user info found in request headers");
+    console.debug("No user info found in request headers");
   }
 
   next();

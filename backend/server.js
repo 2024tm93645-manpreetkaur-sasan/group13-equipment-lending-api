@@ -1,13 +1,18 @@
 const express = require('express');
-const morgan = require('morgan');
 const connectDB = require('./config/database');
 const config = require('./config/config');
 const routes = require('./routes');
 const injectUser = require('./common/injectUser');
 const startOverdueScheduler = require('./scripts/overDueScheduler');
+const logger = require('./utils/logger');
 
-console.log("Starting backend...");
-console.log("Loaded config:", config);
+// New middlewares
+const correlationId = require('./middleware/correlationId');
+const requestLogger = require('./middleware/requestLogger');
+const errorHandler = require('./middleware/errorHandler');
+
+console.log("🚀 Starting backend...");
+console.log("✅ Loaded config:", config);
 
 const app = express();
 
@@ -15,39 +20,34 @@ const app = express();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// Request logging
-app.use(morgan('dev'));
+// Correlation ID + structured request logging
+app.use(correlationId);
+app.use(requestLogger);
 
-// Inject user middleware
+// Optional: legacy console logging can be removed
 app.use(injectUser);
 
-app.use((req, res, next) => {
-  console.log('Backend received request:');
-  console.log('Method:', req.method);
-  console.log('URL:', req.originalUrl);
-  console.log('Headers:', req.headers);
-  next();
-});
-
-// API routes
+// Route handling
 app.use('/api', routes);
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', correlationId: req.correlationId });
 });
 
-// Connect to DB and start server
+// Centralized error handler (must be last)
+app.use(errorHandler);
+
+// Start server only after DB connects
 connectDB()
   .then(() => {
     app.listen(config.PORT, () => {
-      console.log(`Backend listening at PORT: ${config.PORT}`);
+      logger.info(` Backend listening at PORT: ${config.PORT}`);
       startOverdueScheduler();
-      console.log("Overdue Scheduler STARTED (CRON running)");
+      logger.info("Overdue Scheduler STARTED (CRON running)");
     });
   })
   .catch((e) => {
-    console.error('DB connect error', e.message);
+    logger.error({ message: e.message, stack: e.stack }, ' DB connection failed');
     process.exit(1);
   });

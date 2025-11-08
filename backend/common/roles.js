@@ -9,7 +9,7 @@ module.exports = function (roles) {
     const u = req.user;
 
     if (!u) {
-      console.log("No user found in request");
+      console.error("No user found in request");
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ success: false, message: 'unauthorized' });
