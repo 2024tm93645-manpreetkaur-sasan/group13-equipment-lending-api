@@ -1,0 +1,10 @@
+const router = require('express').Router();
+const requestController = require('../controllers/requestController');
+const requireRole = require('../common/roles');
+router.post('/', requestController.request);
+router.get('/', requestController.list);
+router.patch('/:id/approve', requireRole(['staff', 'admin']), requestController.approve);
+router.patch('/:id/reject', requireRole(['staff', 'admin']), requestController.reject);
+router.patch('/:id/issue', requireRole(['staff', 'admin']), requestController.issue);
+router.patch('/:id/return', requireRole(['staff', 'admin']), requestController.return);
+module.exports = router;

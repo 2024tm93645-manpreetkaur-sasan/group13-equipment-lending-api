@@ -1,0 +1,200 @@
+manpreetkaursasan@Manpreets-MacBook-Air backend % npm i
+
+added 169 packages, and audited 170 packages in 7s
+
+27 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+manpreetkaursasan@Manpreets-MacBook-Air backend % npm run seed
+
+> backend@1.0.0 seed
+> node scripts/seed.js
+
+MongoDB connected successfully
+Backend seed done.
+equipments: 690f82760a2f2f4aaf022216 690f82760a2f2f4aaf022218
+users found: {
+  admin: '690f803d50c423fb2f943103',
+  staff: '690f803e50c423fb2f943105',
+  student: '690f803e50c423fb2f943107'
+}
+manpreetkaursasan@Manpreets-MacBook-Air backend % npm run start:pretty
+
+> backend@1.0.0 start:pretty
+> node server.js | pino-pretty
+
+Roles required: [ 'admin' ]
+Roles required: [ 'admin' ]
+Roles required: [ 'admin' ]
+Roles required: [ 'staff', 'admin' ]
+Roles required: [ 'staff', 'admin' ]
+Roles required: [ 'staff', 'admin' ]
+Roles required: [ 'staff', 'admin' ]
+🚀 Starting backend...
+✅ Loaded config: {
+  PORT: '4000',
+  MONGO_URI: 'mongodb://localhost:27017/school_equipment_lending',
+  CRON_SCHEDULE: '*/1 * * * *'
+}
+MongoDB connected successfully
+[23:19:13.057] INFO:  Backend listening at PORT: 4000
+    service: "equipment-lending-backend"
+[23:19:13.058] INFO: Overdue Scheduler STARTED (CRON running)
+    service: "equipment-lending-backend"
+No user info found in request headers
+[23:19:22.454] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "14eec1dd-6371-4cf3-afcb-266c5a45ada4"
+    method: "PUT"
+    path: "/api/equipments/690c939013e253efff580554"
+    statusCode: 404
+    durationMs: 5
+No user info found in request headers
+[23:19:35.331] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "41de95c9-4084-498d-83be-94dc3fab97c2"
+    method: "PUT"
+    path: "/api/equipments/690c939013e253efff580554"
+    statusCode: 404
+    durationMs: 2
+No user info found in request headers
+[23:19:46.022] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "9885e7e9-27a9-44f1-bd9f-12cb4ab2bfe3"
+    method: "GET"
+    path: "/api/requests"
+    statusCode: 500
+    durationMs: 12
+Overdue created 690f82760a2f2f4aaf02221d
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+Attempting to create equipment...
+Equipment created successfully!
+[23:25:40.440] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "b007abfb-ecff-4034-b662-8c162e1d71cc"
+    method: "POST"
+    path: "/api/equipments/"
+    statusCode: 201
+    durationMs: 19
+No user info found in request headers
+[23:25:47.903] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "b5b4fe72-3c64-424a-8906-a7b90528db5d"
+    method: "GET"
+    path: "/api/equipments/"
+    statusCode: 200
+    durationMs: 9
+No user info found in request headers
+[23:25:55.015] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "0784526c-d94e-48ab-a2e8-85499f5aedf8"
+    method: "PUT"
+    path: "/api/equipments/690f841c9e828282bb683173"
+    statusCode: 404
+    durationMs: 1
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+[23:26:33.420] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "9a2d5304-cff6-42d8-8dd9-c07e75d0c44a"
+    method: "PUT"
+    path: "/api/equipments/690f841c9e828282bb683173"
+    statusCode: 404
+    durationMs: 1
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+[23:26:45.736] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "18d3b2fa-6d50-4497-b636-71008c8e3899"
+    method: "PATCH"
+    path: "/api/equipments/690f841c9e828282bb683173"
+    statusCode: 200
+    durationMs: 14
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+[23:27:26.010] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "34ea9e12-8826-453e-bbf1-d4fe769e7f85"
+    method: "DELETE"
+    path: "/api/equipments/690f841c9e828282bb683173"
+    statusCode: 200
+    durationMs: 14
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+[23:27:59.387] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "e3957680-bccb-40fe-84b4-21f26c579e31"
+    method: "GET"
+    path: "/api/requests"
+    statusCode: 200
+    durationMs: 19
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+[23:28:17.086] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "c1884b88-b58e-4ddb-aea1-a3b621cb8d9c"
+    method: "POST"
+    path: "/api/requests"
+    statusCode: 404
+    durationMs: 8
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+[23:28:34.536] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "73359471-0efe-40ec-bd0b-bbd4ae430a40"
+    method: "POST"
+    path: "/api/requests"
+    statusCode: 201
+    durationMs: 29
+No user found in request
+No user info found in request headers
+[23:28:55.249] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "6cb445d4-9621-42d7-af01-861aa95702e2"
+    method: "PATCH"
+    path: "/api/requests/690f84ca9e828282bb683180/approve"
+    statusCode: 401
+    durationMs: 2
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+[23:29:24.516] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "65caa417-f609-4b72-8129-fe98ce7aec2e"
+    method: "PATCH"
+    path: "/api/requests/690f84ca9e828282bb683180/approve"
+    statusCode: 200
+    durationMs: 20
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+[23:29:57.880] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "c1fbdab7-8be3-4548-8ec3-df872de01cf2"
+    method: "PATCH"
+    path: "/api/requests/690f84ca9e828282bb683180/issue"
+    statusCode: 200
+    durationMs: 28
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+User role found: admin
+[23:30:01.560] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "fa1e4568-5290-4474-98a8-c273899c8a1b"
+    method: "PATCH"
+    path: "/api/requests/690f84ca9e828282bb683180/return"
+    statusCode: 200
+    durationMs: 18
+No user info found in request headers
+[23:30:04.314] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "44e5d554-f0b8-4967-9de7-9d0144978c52"
+    method: "GET"
+    path: "/api/notifications"
+    statusCode: 401
+    durationMs: 1
+User Injected into backend: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+Notification List - req.user: { id: '690f83de33ac03907a58cc9f', role: 'admin' }
+Found notifications: []
+[23:30:27.645] INFO: Request completed
+    service: "equipment-lending-backend"
+    correlationId: "48e4e169-f371-4b06-aed3-afa1ed1b8c46"
+    method: "GET"
+    path: "/api/notifications"
+    statusCode: 200
+    durationMs: 17
