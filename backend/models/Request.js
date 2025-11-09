@@ -5,6 +5,10 @@ const RequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  uname: {
+  type: String,
+  required: false
+   },
   equipment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Equipment',
