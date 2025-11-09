@@ -58,31 +58,42 @@
                                  │
                     ┌────────────┼────────────┐
                     │            │            │
-                    ▼            ▼            ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│              MongoDB Database: school_equipment_lending                  │
-│  ┌────────────────┐  ┌────────────────┐  ┌─────────────────────────┐  │
-│  │     users      │  │   equipments   │  │       requests          │  │
-│  │  ────────────  │  │  ────────────  │  │     ──────────────      │  │
-│  │  _id           │  │  _id           │  │     _id                 │  │
-│  │  email         │  │  name          │  │     equipmentId         │  │
-│  │  password      │  │  category      │  │     userId              │  │
-│  │  name          │  │  status        │  │     status              │  │
-│  │  role          │  │  serialNumber  │  │     requestDate         │  │
-│  └────────────────┘  └────────────────┘  │     dueDate             │  │
-│                                           │     returnDate          │  │
-│  ┌─────────────────────────────────────┐ └─────────────────────────┘  │
-│  │      notifications (★ NEW)          │        ▲                      │
-│  │    ──────────────────────────       │        │                      │
-│  │    _id                               │        │                      │
-│  │    userId                            │        │                      │
-│  │    requestId ───────────────────────┼────────┘                      │
-│  │    type (overdue/reminder)           │                               │
-│  │    message                           │                               │
-│  │    read (boolean)                    │                               │
-│  │    createdAt                         │                               │
-│  └─────────────────────────────────────┘                               │
-└─────────────────────────────────────────────────────────────────────────┘
+                     ▼            ▼            ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              MongoDB Database: school_equipment_lending                     │
+│                                                                             │
+│  ┌───────────────────────┐   ┌───────────────────────┐   ┌─────────────────────────────┐
+│  │        users          │   │      equipments       │   │          requests           │
+│  │  ───────────────────  │   │  ───────────────────  │   │      ───────────────────     │
+│  │  _id                  │   │  _id                 │   │  _id                        │
+│  │  name                 │   │  name                │   │  equipmentId                │
+│  │  email                │   │  category            │   │  userId                     │
+│  │  password             │   │  condition           │   │  quantity                   │
+│  │  role                 │   │  quantity            │   │  issueDate                  │
+│  │  createdAt            │   │  available           │   │  dueDate                    │
+│  │  updatedAt            │   │  createdAt           │   │  status                     │
+│  └───────────────────────┘   │  updatedAt           │   │  overdueNotified            │
+│                              └───────────────────────┘   │  approvedBy                 │
+│                                                          │  createdAt                  │
+│                                                          │  updatedAt                  │
+│                                                          └─────────────────────────────┘
+│
+│                             ▲
+│                             │
+│  ┌─────────────────────────────────────────────┐
+│  │            notifications            │
+│  │      ────────────────────────────────       │
+│  │      _id                                   │
+│  │      user                                  │
+│  │      requestId ─────────────────────────────┘
+│  │      type (overdue / reminder)             │
+│  │      message                               │
+│  │      read (boolean)                        │
+│  │      createdAt                             │
+│  │      updatedAt                             │
+│  └─────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -152,10 +163,7 @@ Return unread notifications
 Frontend highlights overdue requests in UI
         ↓
 User views notification
-        ↓
-PATCH /api/notifications/:id/read
-        ↓
-Mark notification as read in MongoDB
+
 ```
 
 ---

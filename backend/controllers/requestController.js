@@ -24,6 +24,7 @@ async function hasOverlap(equip, from, to, exclude) {
 exports.request = async (req, res) => {
   try {
     const uid = req.user && req.user.id;
+    const uname = req.user.name;
     if (!uid)
       return res.status(StatusCodes.UNAUTHORIZED).json({ success: false, message: 'unauthorized' });
 
@@ -44,7 +45,8 @@ exports.request = async (req, res) => {
       return res.status(StatusCodes.CONFLICT).json({ success: false, message: 'booking conflict' });
 
     const r = await Request.create({
-      user: uid, // Just storing the ID from proxy
+      user:uid,
+      uname:uname,
       equipment,
       quantity,
       issueDate: new Date(from),
@@ -86,7 +88,7 @@ exports.reject = async (req, res) => {
   if (!r) return res.status(StatusCodes.NOT_FOUND).json({ success: false, message: 'not found' });
 
   r.status = 'rejected';
-  r.approvedBy = req.user.id;
+  r.approvedBy = req.user.name;
   await r.save();
 
   return res.status(StatusCodes.OK).json({ success: true, message: 'rejected', data: r });
