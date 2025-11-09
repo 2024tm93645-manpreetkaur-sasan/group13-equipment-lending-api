@@ -11,11 +11,25 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const FRONTEND = process.env.FRONTEND_URL || 'http://localhost:3000';
 
-app.use(cors({
-  origin: FRONTEND,
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id', 'x-user-role'],
-}));
+
+//CORS proper handling
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", FRONTEND);
+  res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+  res.header( "Access-Control-Allow-Headers","Authorization, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+
+  // Preflight request handling
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  next();
+});
+
+
+
 
 app.use(morgan('dev'));
 

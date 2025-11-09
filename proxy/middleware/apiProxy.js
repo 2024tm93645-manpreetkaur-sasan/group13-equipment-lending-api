@@ -15,7 +15,7 @@ const injectUserMiddleware = (req, res, next) => {
     try {
       const payload = verifyToken(token);
       if (payload) {
-        req.user = { id: payload.id, role: payload.role };
+        req.user = { id: payload.id, role: payload.role, name:payload.name };
       }
     } catch (err) {
       console.error("Proxy JWT failed:", err.message);
@@ -53,6 +53,7 @@ const apiProxy = createProxyMiddleware({
 
     // Forward JWT user headers
     if (req.user) {
+      proxyReq.setHeader('x-user-name',req.user.name);
       proxyReq.setHeader('x-user-id', req.user.id);
       proxyReq.setHeader('x-user-role', req.user.role);
     }
